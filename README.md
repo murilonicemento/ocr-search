@@ -6,7 +6,7 @@ API ASP.NET Core para upload de documentos (PDFs e imagens), extração de texto
 
 ## 📚 Visão Geral
 
-Este projeto tem como objetivo criar um sistema de **busca inteligente em documentos** por meio de:
+Este projeto visa criar um sistema de **busca inteligente em documentos** por meio de:
 - Upload de arquivos (PDF, PNG, JPG)
 - Extração de texto com OCR (Tesseract)
 - Indexação de conteúdo e metadados no Elasticsearch
@@ -16,41 +16,36 @@ Este projeto tem como objetivo criar um sistema de **busca inteligente em docume
 
 ## 🚀 Tecnologias Utilizadas
 
-| Camada | Tecnologia |
-|--------|------------|
-| Backend | ASP.NET Core Web API |
-| OCR | Tesseract OCR |
-| Busca | Elasticsearch + NEST |
-| Armazenamento (opcional) | PostgreSQL / MongoDB |
-| Containerização | Docker + Docker Compose |
-| Outros | Serilog, Swagger, AutoMapper, FluentValidation |
+| Camada | Tecnologia                                    |
+|--------|-----------------------------------------------|
+| Backend | ASP.NET Core Web API                          |
+| OCR | Tesseract OCR                                 |
+| Busca | Elasticsearch + NEST                          |
+| Containerização | Docker + Docker Compose                       |
+| Outros | Serilog, Scalar, AutoMapper, FluentValidation |
 
 ---
 
 ## 📦 Funcionalidades
 
-- [x] Upload de arquivos PDF e imagens
-- [x] Extração de texto com OCR
-- [x] Indexação no Elasticsearch
-- [x] API REST para busca textual
+- [ ] Upload de arquivos PDF e imagens
+- [ ] Extração de texto com OCR
+- [ ] Indexação no Elasticsearch
+- [ ] API REST para busca textual
 - [ ] Highlight de termos encontrados
 - [ ] Filtros por tipo de documento, data, etc.
-- [ ] Autenticação com JWT (futuro)
-- [ ] Dashboard de monitoramento (futuro)
 
 ---
 
 ## 📁 Estrutura do Projeto
 
 ```bash
-/src
-  /Application       # Lógica de negócio
-  /Domain            # Entidades e contratos
-  /Infrastructure    # OCR, Elasticsearch, repositórios
-  /WebAPI            # Controllers e configuração
-  /OCR               # Integração com Tesseract
-/docker
-  docker-compose.yml # Elasticsearch + Kibana
+/OCRSearch.Application       # Lógica de negócio
+/OCRSearch.Domain            # Entidades e contratos
+/OCRSearch.Infrastructure    # OCR, Elasticsearch, repositórios
+/OCRSearch.API               # Controllers e configuração
+/OCRSearch.OCR               # Integração com Tesseract
+docker-compose.yml # Elasticsearch + Kibana
 ```
 
 ---
@@ -59,7 +54,7 @@ Este projeto tem como objetivo criar um sistema de **busca inteligente em docume
 
 ### 🔧 Pré-requisitos
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download)
 - [Docker](https://www.docker.com/)
 - [Elasticsearch](https://www.elastic.co/elasticsearch/) (v8.x recomendado)
 
@@ -79,7 +74,7 @@ cd src/WebAPI
 dotnet run
 ```
 
-Swagger disponível em: [http://localhost:5000/swagger](http://localhost:5000/swagger)
+Swagger disponível em: [http://localhost:5174/scalar/v1](http://localhost:5000/swagger)
 
 ---
 
@@ -116,16 +111,6 @@ GET /api/search?q=contrato+fornecedor
   }
 ]
 ```
-
----
-
-## 🧠 Considerações Futuras
-
-- Integração com Azure Blob Storage ou AWS S3
-- OCR assíncrono com filas (ex: RabbitMQ)
-- Upload em lote de arquivos
-- Detecção automática de idioma
-- Interface web para upload e busca (Blazor, Vue ou React)
 
 ---
 
