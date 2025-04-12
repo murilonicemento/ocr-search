@@ -13,21 +13,21 @@ ARG BUILD_CONFIGURATION=Release
 
 WORKDIR /src
 
-COPY ["OCRSearch/OCRSearch.csproj", "OCRSearch/"]
+COPY ["OCRSearch.Api/OCRSearch.Api.csproj", "OCRSearch.Api/"]
 
-RUN dotnet restore "OCRSearch/OCRSearch.csproj"
+RUN dotnet restore "OCRSearch.Api/OCRSearch.Api.csproj"
 
 COPY . .
 
-WORKDIR "/src/OCRSearch"
+WORKDIR "/src/OCRSearch.Api"
 
-RUN dotnet build "OCRSearch.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "OCRSearch.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 
 ARG BUILD_CONFIGURATION=Release
 
-RUN dotnet publish "OCRSearch.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "OCRSearch.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 
@@ -35,4 +35,4 @@ WORKDIR /app
 
 COPY --from=publish /app/publish .
 
-ENTRYPOINT ["dotnet", "OCRSearch.dll"]
+ENTRYPOINT ["dotnet", "OCRSearch.Api.dll"]
