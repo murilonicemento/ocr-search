@@ -1,6 +1,6 @@
 ﻿# 🔍 OCR Search API
 
-API ASP.NET Core para upload de documentos (PDFs e imagens), extração de texto via OCR e indexação no Elasticsearch, permitindo busca full-text rápida e eficiente.
+API para upload de documentos (PDFs e imagens), extração de texto via OCR e indexação no Elasticsearch, permitindo busca full-text rápida e eficiente.
 
 ---
 
