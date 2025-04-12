@@ -1,0 +1,50 @@
+﻿services:
+  api:
+    container_name: ocr-search-api
+    build:
+      context: .
+      dockerfile: OCRSearch/Dockerfile
+    ports:
+      - "5173:8080"
+      - "5174:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ElasticSearchConfiguration__Url=http://localhost:9200
+      - ElasticSearchConfiguration__DefaultIndex=documents
+      - ElasticSearchConfiguration__Username=
+      - ElasticSearchConfiguration__Password=
+    depends_on:
+      - elasticsearch
+    networks:
+      - ocr-search-network
+    restart: unless-stopped
+  elasticsearch:
+    container_name: elasticsearch
+    image: elasticsearch:8.17.4
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    networks:
+      - ocr-search-network
+    restart: unless-stopped
+  kibana:
+    container_name: kibana
+    image: kibana:8.17.4
+    ports:
+      - "5601:5601"
+    depends_on:
+      - els
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    networks:
+      - ocr-search-network
+    restart: unless-stopped
+networks:
+  ocr-search-network:
+    driver: bridge
+volumes:
+  elasticsearch-data:
