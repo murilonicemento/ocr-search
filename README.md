@@ -61,8 +61,7 @@ docker-compose.yml # Elasticsearch + Kibana
 ### 🚨 Subindo o Elasticsearch com Docker
 
 ```bash
-cd docker
-docker-compose up -d
+docker-compose up --build -d
 ```
 
 Acesse o Kibana: [http://localhost:5601](http://localhost:5601)
@@ -70,7 +69,7 @@ Acesse o Kibana: [http://localhost:5601](http://localhost:5601)
 ### ▶️ Rodando a API
 
 ```bash
-cd src/WebAPI
+cd OCRSearch.Api/
 dotnet run
 ```
 
