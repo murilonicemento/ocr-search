@@ -13,8 +13,6 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddScoped<IFileService, FileService>();
 
-builder.Services.Configure<ElasticSearchConfiguration>(builder.Configuration.GetSection("ElasticSearchConfiguration"));
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
