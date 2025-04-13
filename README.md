@@ -82,7 +82,7 @@ Swagger disponível em: [http://localhost:5174/scalar/v1](http://localhost:5000/
 ### 📤 Upload de Documento
 
 ```http
-POST /api/documents/upload
+POST /upload-file
 Content-Type: multipart/form-data
 ```
 
@@ -94,7 +94,7 @@ Content-Type: multipart/form-data
 ### 🔍 Buscar Documento
 
 ```http
-GET /api/search?q=contrato+fornecedor
+GET /get-file/search?q=contrato+fornecedor
 ```
 
 **Query Params:**
