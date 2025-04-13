@@ -14,6 +14,8 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 COPY ["OCRSearch.Api/OCRSearch.Api.csproj", "OCRSearch.Api/"]
+COPY ["OCRSearch.Application/OCRSearch.Application.csproj", "OCRSearch.Application/"]
+COPY ["OCRSearch.Infrastructure/OCRSearch.Infrastructure.csproj", "OCRSearch.Infrastructure/"]
 
 RUN dotnet restore "OCRSearch.Api/OCRSearch.Api.csproj"
 
