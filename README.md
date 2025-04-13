@@ -28,7 +28,7 @@ Este projeto visa criar um sistema de **busca inteligente em documentos** por me
 
 ## 📦 Funcionalidades
 
-- [ ] Upload de arquivos PDF e imagens
+- [X] Upload de arquivos PDF e imagens
 - [ ] Extração de texto com OCR
 - [ ] Indexação no Elasticsearch
 - [ ] API REST para busca textual
