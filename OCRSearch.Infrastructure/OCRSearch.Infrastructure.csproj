@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\OCRSearch.Application\OCRSearch.Application.csproj" />
+    </ItemGroup>
+
 </Project>
