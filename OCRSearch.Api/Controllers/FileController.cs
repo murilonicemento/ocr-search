@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OCRSearch.Application.DTOs;
+using OCRSearch.Application.Exceptions;
 using OCRSearch.Application.Interfaces;
 
 namespace OCRSearch.Api.Controllers;
@@ -47,7 +48,11 @@ public class FileController : ControllerBase
 
             return Ok("File uploaded with success.");
         }
-        catch (Exception exception)
+        catch (InvalidOperationException exception)
+        {
+            return Problem(exception.Message, statusCode: 500);
+        }
+        catch (FileUploadException exception)
         {
             return Problem(exception.Message, statusCode: 500);
         }
