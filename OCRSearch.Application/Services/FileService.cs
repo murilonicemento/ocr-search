@@ -11,10 +11,12 @@ namespace OCRSearch.Application.Services;
 public class FileService : IFileService
 {
     private readonly IConfiguration _configuration;
+    private readonly ISearchProvider _searchProvider;
 
-    public FileService(IConfiguration configuration)
+    public FileService(IConfiguration configuration, ISearchProvider searchProvider)
     {
         _configuration = configuration;
+        _searchProvider = searchProvider;
     }
 
     public async Task Upload(UploadFileDto uploadFileDto)
@@ -50,6 +52,22 @@ public class FileService : IFileService
         }
 
         var content = await ExecuteOcr(imageUrl);
+
+        var fileDto = new FileDto
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = uploadFileDto.Name,
+            Url = imageUrl,
+            ExtractedText = content,
+            UploadedAt = DateTime.UtcNow
+        };
+
+        var searchResult = await _searchProvider.IndexDocumentAsync(fileDto, "files");
+
+        if (!searchResult)
+        {
+            throw new InvalidOperationException("Can't index document.");
+        }
     }
 
     private static async Task<string> ExecuteOcr(string imageUrl)
@@ -63,7 +81,7 @@ public class FileService : IFileService
 
         if (file is null)
         {
-            throw new InvalidOperationException("Error to execute execute the operation.");
+            throw new InvalidOperationException("Error to load file.");
         }
 
         var page = engine.Process(file);
