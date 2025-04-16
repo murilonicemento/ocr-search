@@ -4,5 +4,5 @@ namespace OCRSearch.Application.Interfaces;
 
 public interface IFileService
 {
-    public void Upload(UploadFileDto uploadFileDto);
+    public Task Upload(UploadFileDto uploadFileDto);
 }
