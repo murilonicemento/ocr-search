@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using OCRSearch.Application.DTOs;
 using OCRSearch.Application.Exceptions;
 using OCRSearch.Application.Interfaces;
+using Tesseract;
 
 namespace OCRSearch.Application.Services;
 
@@ -16,7 +17,7 @@ public class FileService : IFileService
         _configuration = configuration;
     }
 
-    public void Upload(UploadFileDto uploadFileDto)
+    public async Task Upload(UploadFileDto uploadFileDto)
     {
         var url = _configuration.GetSection("CloudinaryConfiguration")["Url"];
         var cloudinary = new Cloudinary(url)
@@ -40,5 +41,39 @@ public class FileService : IFileService
         {
             throw new FileUploadException($"Error uploading file: {result.Error.Message}");
         }
+
+        var imageUrl = result.SecureUrl.ToString();
+
+        if (imageUrl is null)
+        {
+            throw new InvalidOperationException("Can't load file to do OCR.");
+        }
+
+        var content = await ExecuteOcr(imageUrl);
+    }
+
+    private static async Task<string> ExecuteOcr(string imageUrl)
+    {
+        using var httpClient = new HttpClient();
+        var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
+
+        using var engine = new TesseractEngine(@"../OCRSearch.Application/tessdata", "eng", EngineMode.Default);
+
+        var file = Pix.LoadFromMemory(imageBytes.ToArray());
+
+        if (file is null)
+        {
+            throw new InvalidOperationException("Error to execute execute the operation.");
+        }
+
+        var page = engine.Process(file);
+        var content = page.GetText();
+
+        if (content.Contains("error", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException(content);
+        }
+
+        return content;
     }
 }
