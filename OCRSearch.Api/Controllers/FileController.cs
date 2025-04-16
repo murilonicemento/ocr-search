@@ -19,7 +19,7 @@ public class FileController : ControllerBase
     public ActionResult UploadFile(IFormFile file)
     {
         if (file.Length == 0) return BadRequest("Invalid file.");
-        
+
         var fileName = Path.GetFileName(file.FileName);
         var fileInfo = new FileInfo(fileName);
 
@@ -27,6 +27,11 @@ public class FileController : ControllerBase
             fileInfo.Extension != ".jpg")
         {
             return BadRequest("File must be pdf, png or jpg/jpeg.");
+        }
+
+        if (file.Length > 1048576)
+        {
+            return BadRequest("File can't be more larger than 100MB.");
         }
 
         var uploadFileDto = new UploadFileDto
