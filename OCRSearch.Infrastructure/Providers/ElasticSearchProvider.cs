@@ -1,4 +1,5 @@
 ﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.QueryDsl;
 using Microsoft.Extensions.Options;
 using OCRSearch.Application.DTOs;
 using OCRSearch.Application.Interfaces;
@@ -32,6 +33,7 @@ public class ElasticSearchProvider : ISearchProvider
         {
             Id = fileDto.Id,
             Name = fileDto.Name,
+            Extension = fileDto.Extension,
             ExtractedText = fileDto.ExtractedText,
             Url = fileDto.Url,
             UploadedAt = fileDto.UploadedAt
@@ -43,8 +45,21 @@ public class ElasticSearchProvider : ISearchProvider
         return response.IsValidResponse;
     }
 
-    public Task SearchDocumentAsync()
+    public async Task<List<FileDto>> SearchDocumentAsync(string content, int? size, string indexName)
     {
-        throw new NotImplementedException();
+        var files = await _client.SearchAsync<FileDto>(s => s
+            .Index(indexName)
+            .From(0)
+            .Size(size)
+            .Query(q => q
+                .MultiMatch(m => m
+                    .Fields("name")
+                    .Fields("extractedText")
+                    .Query(content)
+                )
+            )
+        );
+
+        return files.Documents.ToList();
     }
 }
