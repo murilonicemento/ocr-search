@@ -51,7 +51,7 @@ public class FileService : IFileService
             throw new InvalidOperationException("Can't load file to do OCR.");
         }
 
-        var content = await ExecuteOcr(imageUrl);
+        var content = await ExtractContentTask(imageUrl);
 
         var fileDto = new FileDto
         {
@@ -70,7 +70,7 @@ public class FileService : IFileService
         }
     }
 
-    private static async Task<string> ExecuteOcr(string imageUrl)
+    private static async Task<string> ExtractContentTask(string imageUrl)
     {
         using var httpClient = new HttpClient();
         var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
