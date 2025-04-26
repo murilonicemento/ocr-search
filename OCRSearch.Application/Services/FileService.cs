@@ -10,6 +10,8 @@ namespace OCRSearch.Application.Services;
 
 public class FileService : IFileService
 {
+    private const string IndexName = "files";
+
     private readonly IConfiguration _configuration;
     private readonly ISearchProvider _searchProvider;
 
@@ -19,7 +21,7 @@ public class FileService : IFileService
         _searchProvider = searchProvider;
     }
 
-    public async Task Upload(UploadFileDto uploadFileDto)
+    public async Task UploadAsync(UploadFileDto uploadFileDto)
     {
         var url = _configuration.GetSection("CloudinaryConfiguration")["Url"];
         var cloudinary = new Cloudinary(url)
@@ -51,18 +53,19 @@ public class FileService : IFileService
             throw new InvalidOperationException("Can't load file to do OCR.");
         }
 
-        var content = await ExtractContentTask(imageUrl);
+        var content = await ExtractContentAsync(imageUrl);
 
         var fileDto = new FileDto
         {
             Id = Guid.NewGuid().ToString(),
             Name = uploadFileDto.Name,
+            Extension = uploadFileDto.Extension,
             Url = imageUrl,
             ExtractedText = content,
             UploadedAt = DateTime.UtcNow
         };
 
-        var searchResult = await _searchProvider.IndexDocumentAsync(fileDto, "files");
+        var searchResult = await _searchProvider.IndexDocumentAsync(fileDto, IndexName);
 
         if (!searchResult)
         {
@@ -70,7 +73,12 @@ public class FileService : IFileService
         }
     }
 
-    private static async Task<string> ExtractContentTask(string imageUrl)
+    public async Task<List<FileDto>> SearchAsync(string content, int? size)
+    {
+        return await _searchProvider.SearchDocumentAsync(content, size, IndexName);
+    }
+
+    private static async Task<string> ExtractContentAsync(string imageUrl)
     {
         using var httpClient = new HttpClient();
         var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
