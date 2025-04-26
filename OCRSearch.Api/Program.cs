@@ -14,8 +14,8 @@ builder.Services.AddOpenApi();
 
 builder.Services.Configure<ElasticSearchConfiguration>(builder.Configuration.GetSection("ElasticSearchConfiguration"));
 
+builder.Services.AddSingleton<ISearchProvider, ElasticSearchProvider>();
 builder.Services.AddScoped<IFileService, FileService>();
-builder.Services.AddScoped<ISearchProvider, ElasticSearchProvider>();
 
 var app = builder.Build();
 
