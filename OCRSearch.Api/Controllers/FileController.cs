@@ -16,35 +16,27 @@ public class FileController : ControllerBase
         _fileService = fileService;
     }
 
-    [HttpPost("/upload-file")]
-    public ActionResult UploadFile(IFormFile file)
+    [HttpPost("Upload-File")]
+    public async Task<ActionResult<string>> UploadFile(IFormFile file)
     {
         if (file.Length == 0) return BadRequest("Invalid file.");
 
         var fileName = Path.GetFileName(file.FileName);
         var fileInfo = new FileInfo(fileName);
 
-        if (fileInfo.Extension != ".pdf" && fileInfo.Extension != ".png" && fileInfo.Extension != ".jpeg" &&
-            fileInfo.Extension != ".jpg")
-        {
-            return BadRequest("File must be pdf, png or jpg/jpeg.");
-        }
-
-        if (file.Length > 1048576)
-        {
-            return BadRequest("File can't be more larger than 100MB.");
-        }
+        if (!ValidateFileExtension(fileInfo.Extension)) return BadRequest("File must be pdf, png or jpg/jpeg.");
+        if (file.Length > 1048576) return BadRequest("File can't be more larger than 100MB.");
 
         var uploadFileDto = new UploadFileDto
         {
             Name = fileInfo.Name,
-            ContentType = file.ContentType,
+            Extension = fileInfo.Extension,
             Content = file.OpenReadStream()
         };
 
         try
         {
-            _fileService.Upload(uploadFileDto);
+            await _fileService.UploadAsync(uploadFileDto);
 
             return Ok("File uploaded with success.");
         }
@@ -56,5 +48,28 @@ public class FileController : ControllerBase
         {
             return Problem(exception.Message, statusCode: 500);
         }
+    }
+
+    [HttpGet("Search-File")]
+    public async Task<ActionResult<List<FileDto>>> SearchFile([FromQuery] string content, int? size)
+    {
+        if (string.IsNullOrEmpty(content)) return BadRequest("Content can't be blank.");
+        if (size == 0) return BadRequest("Number of documents must be greater than 0.");
+
+        try
+        {
+            var files = await _fileService.SearchAsync(content, size);
+
+            return Ok(files);
+        }
+        catch (Exception exception)
+        {
+            return Problem(exception.Message, statusCode: 500);
+        }
+    }
+
+    private static bool ValidateFileExtension(string extension)
+    {
+        return extension is ".pdf" or ".png" or ".jpeg" or ".jpg";
     }
 }
