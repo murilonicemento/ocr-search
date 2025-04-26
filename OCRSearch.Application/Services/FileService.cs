@@ -78,12 +78,13 @@ public class FileService : IFileService
         return await _searchProvider.SearchDocumentAsync(content, size, IndexName);
     }
 
-    private static async Task<string> ExtractContentAsync(string imageUrl)
+    private async Task<string> ExtractContentAsync(string imageUrl)
     {
         using var httpClient = new HttpClient();
         var imageBytes = await httpClient.GetByteArrayAsync(imageUrl);
-
-        using var engine = new TesseractEngine(@"../OCRSearch.Application/tessdata", "eng", EngineMode.Default);
+        var tssdataPrefix = _configuration.GetSection("Tesseract")["TESSDATA_PATH"];
+        
+        using var engine = new TesseractEngine(tssdataPrefix, "eng", EngineMode.Default);
 
         var file = Pix.LoadFromMemory(imageBytes.ToArray());
 

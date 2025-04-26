@@ -36,4 +36,6 @@ WORKDIR /app
 
 COPY --from=publish /app/publish .
 
+COPY "OCRSearch.Application/tessdata" /usr/share/tesseract-ocr/4.00/tessdata
+
 ENTRYPOINT ["dotnet", "OCRSearch.Api.dll"]

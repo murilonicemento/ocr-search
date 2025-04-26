@@ -14,6 +14,7 @@
       - ElasticSearchConfiguration__DefaultIndex=${ElasticSearchConfiguration__DefaultIndex}
       - ElasticSearchConfiguration__Username=${ElasticSearchConfiguration__Username}
       - ElasticSearchConfiguration__Password=${ElasticSearchConfiguration__Password}
+      - Tesseract__TESSDATA_PATH=${Tesseract__TESSDATA_PATH}
       - CloudinaryConfiguration__Url=${CloudinaryConfiguration__Url}
     depends_on:
       - elasticsearch
