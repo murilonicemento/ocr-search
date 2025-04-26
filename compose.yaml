@@ -41,7 +41,7 @@
     depends_on:
       - elasticsearch
     environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_HOSTS=${ElasticSearchConfiguration__Url}
     networks:
       - ocr-search-network
     restart: unless-stopped
