@@ -6,7 +6,6 @@
       dockerfile: OCRSearch.Api/Dockerfile
     ports:
       - "5173:8080"
-      - "5174:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ElasticSearchConfiguration__Url=${ElasticSearchConfiguration__Url}
