@@ -16,23 +16,23 @@ Este projeto visa criar um sistema de **busca inteligente em documentos** por me
 
 ## 🚀 Tecnologias Utilizadas
 
-| Camada | Tecnologia                                    |
-|--------|-----------------------------------------------|
-| Backend | ASP.NET Core Web API                          |
-| OCR | Tesseract OCR                                 |
-| Busca | Elasticsearch + NEST                          |
-| Containerização | Docker + Docker Compose                       |
-| Outros | Serilog, Scalar, AutoMapper, FluentValidation |
+| Camada | Tecnologia                              |
+|--------|-----------------------------------------|
+| Backend | ASP.NET Core Web API                    |
+| OCR | Tesseract OCR                           |
+| Busca | Elasticsearch                           |
+| Containerização | Docker + Docker Compose                 |
+| Outros |  Scalar                                 |
 
 ---
 
 ## 📦 Funcionalidades
 
 - [X] Upload de arquivos PDF e imagens
-- [ ] Extração de texto com OCR
-- [ ] Indexação no Elasticsearch
-- [ ] API REST para busca textual
-- [ ] Highlight de termos encontrados
+- [x] Extração de texto com OCR
+- [x] Indexação no Elasticsearch
+- [x] API REST para busca textual
+- [x] Highlight de termos encontrados
 - [ ] Filtros por tipo de documento, data, etc.
 
 ---
