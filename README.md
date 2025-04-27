@@ -1,34 +1,36 @@
-﻿# 🔍 OCR Search API
+﻿# OCR Search API
 
-API para upload de documentos (PDFs e imagens), extração de texto via OCR e indexação no Elasticsearch, permitindo busca full-text rápida e eficiente.
+API para upload de documentos (PDFs e imagens), extração de texto via OCR e indexação no Elasticsearch, permitindo busca
+full-text.
 
 ---
 
-## 📚 Visão Geral
+## Visão Geral
 
 Este projeto visa criar um sistema de **busca inteligente em documentos** por meio de:
-- Upload de arquivos (PDF, PNG, JPG)
+
+- Upload de arquivos (PDF, PNG, JPG/JPEG)
 - Extração de texto com OCR (Tesseract)
 - Indexação de conteúdo e metadados no Elasticsearch
 - API de busca com filtros e relevância
 
 ---
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
-| Camada | Tecnologia                              |
-|--------|-----------------------------------------|
-| Backend | ASP.NET Core Web API                    |
-| OCR | Tesseract OCR                           |
-| Busca | Elasticsearch                           |
-| Containerização | Docker + Docker Compose                 |
-| Outros |  Scalar                                 |
+| Camada          | Tecnologia              |
+|-----------------|-------------------------|
+| Backend         | ASP.NET Core Web API    |
+| OCR             | Tesseract OCR           |
+| Busca           | Elasticsearch           |
+| Containerização | Docker + Docker Compose |
+| Outros          | Scalar                  |
 
 ---
 
-## 📦 Funcionalidades
+## Funcionalidades
 
-- [X] Upload de arquivos PDF e imagens
+- [x] Upload de arquivos PDF e imagens
 - [x] Extração de texto com OCR
 - [x] Indexação no Elasticsearch
 - [x] API REST para busca textual
@@ -37,28 +39,26 @@ Este projeto visa criar um sistema de **busca inteligente em documentos** por me
 
 ---
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```bash
 /OCRSearch.Application       # Lógica de negócio
 /OCRSearch.Domain            # Entidades e contratos
 /OCRSearch.Infrastructure    # OCR, Elasticsearch, repositórios
 /OCRSearch.API               # Controllers e configuração
-/OCRSearch.OCR               # Integração com Tesseract
-docker-compose.yml # Elasticsearch + Kibana
+compose.yml # Elasticsearch + Kibana
 ```
 
 ---
 
-## 🛠️ Setup do Projeto
+## Setup do Projeto
 
-### 🔧 Pré-requisitos
+### Pré-requisitos
 
-- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download)
+- [.NET 9 SDK](https://dotnet.microsoft.com/en-us/download) (se quiser rodar localmente)
 - [Docker](https://www.docker.com/)
-- [Elasticsearch](https://www.elastic.co/elasticsearch/) (v8.x recomendado)
 
-### 🚨 Subindo o Elasticsearch com Docker
+### Rodando API, Elasticsearch e Kibana com Docker
 
 ```bash
 docker-compose up --build -d
@@ -66,53 +66,65 @@ docker-compose up --build -d
 
 Acesse o Kibana: [http://localhost:5601](http://localhost:5601)
 
-### ▶️ Rodando a API
+### Rodando API localmente
 
 ```bash
-cd OCRSearch.Api/
-dotnet run
+docker-compose up --build -d
+docker stop ocr-search-api
+cd OCRSearch.Api && dotnet run
 ```
 
-Swagger disponível em: [http://localhost:5174/scalar/v1](http://localhost:5000/swagger)
+Acesse o Scalar: [http://localhost:5174/scalar/v1](http://localhost:5174/scalar/v1)
 
 ---
 
-## 🔐 Endpoints Principais
+## Endpoints
 
-### 📤 Upload de Documento
+### Upload de Documento
 
 ```http
-POST /upload-file
+POST /Upload-File
 Content-Type: multipart/form-data
 ```
 
-**Body:**
-- Arquivo: PDF ou imagem
+**Key:**
+
+- file
+
+**Value**
+
+- Arquivo (PDF e imagem)
 
 ---
 
-### 🔍 Buscar Documento
+### Buscar Documento
 
 ```http
-GET /get-file/search?q=contrato+fornecedor
+GET /Search-File?content=texto&size=
 ```
 
 **Query Params:**
-- `q`: Termo de busca
+
+- `content`: Termo de busca
+- `size`: Quantos documentos retornar
 
 **Retorno:**
+
 ```json
 [
   {
     "id": "abc123",
-    "title": "Contrato_Fornecedor.pdf",
-    "snippet": "...encontrado no contrato firmado com o fornecedor..."
+    "name": "test.png",
+    "extension": ".png",
+    "url": "https://some-url",
+    "extractedText": "bla bla bla bla bla",
+    "uploadedAt": "2025-04-27 15:42:30"
   }
 ]
 ```
 
 ---
 
-## 📄 Licença
+## Licença
 
 Projeto open-source sob a licença MIT. Sinta-se à vontade para usar, modificar e contribuir!
