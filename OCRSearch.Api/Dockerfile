@@ -34,6 +34,21 @@ FROM base AS final
 
 WORKDIR /app
 
+USER root
+
+RUN apt update && apt install -y --no-install-recommends \
+    libc6-dev \
+    libleptonica-dev \
+    tesseract-ocr \
+    tesseract-ocr-eng \
+ && rm -rf /var/lib/apt/lists/* \
+ && mkdir /app/x64 \
+ && ln -s /lib/x86_64-linux-gnu/libleptonica.so /app/x64/libleptonica-1.82.0.so \
+ && ln -s /lib/x86_64-linux-gnu/libdl.so.2 /lib/x86_64-linux-gnu/libdl.so \
+ && ln -s /lib/x86_64-linux-gnu/libtesseract.so.5 /app/x64/libtesseract50.so
+
+USER $APP_UID
+
 COPY --from=publish /app/publish .
 
 COPY "OCRSearch.Application/tessdata" /usr/share/tesseract-ocr/4.00/tessdata
