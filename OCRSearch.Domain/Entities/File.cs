@@ -1,6 +1,6 @@
-﻿namespace OCRSearch.Infrastructure.Models;
+﻿namespace OCRSearch.Domain.Entities;
 
-public class FileModel
+public class File
 {
     public string Id { get; set; }
 
