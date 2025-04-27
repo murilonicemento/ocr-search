@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCRSearch.Infrastructure", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCRSearch.Application", "OCRSearch.Application\OCRSearch.Application.csproj", "{8D2B0132-E513-4264-BA2F-BF35725DF3C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCRSearch.Domain", "OCRSearch.Domain\OCRSearch.Domain.csproj", "{11226ECF-3F25-43D9-A366-2BFA26C4A6CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,5 +31,9 @@ Global
 		{8D2B0132-E513-4264-BA2F-BF35725DF3C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D2B0132-E513-4264-BA2F-BF35725DF3C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D2B0132-E513-4264-BA2F-BF35725DF3C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11226ECF-3F25-43D9-A366-2BFA26C4A6CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11226ECF-3F25-43D9-A366-2BFA26C4A6CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11226ECF-3F25-43D9-A366-2BFA26C4A6CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11226ECF-3F25-43D9-A366-2BFA26C4A6CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
