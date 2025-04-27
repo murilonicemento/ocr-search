@@ -43,8 +43,8 @@ Este projeto visa criar um sistema de **busca inteligente em documentos** por me
 
 ```bash
 /OCRSearch.Application       # Lógica de negócio
-/OCRSearch.Domain            # Entidades e contratos
-/OCRSearch.Infrastructure    # OCR, Elasticsearch, repositórios
+/OCRSearch.Domain            # Entidades
+/OCRSearch.Infrastructure    # Elasticsearch
 /OCRSearch.API               # Controllers e configuração
 compose.yml                  # API + Elasticsearch + Kibana
 ```
