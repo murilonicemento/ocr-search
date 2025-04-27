@@ -19,7 +19,7 @@ Este projeto visa criar um sistema de **busca inteligente em documentos** por me
 ## Tecnologias Utilizadas
 
 | Camada          | Tecnologia              |
-|-----------------|-------------------------|
+| --------------- | ----------------------- |
 | Backend         | ASP.NET Core Web API    |
 | OCR             | Tesseract OCR           |
 | Busca           | Elasticsearch           |
@@ -46,7 +46,7 @@ Este projeto visa criar um sistema de **busca inteligente em documentos** por me
 /OCRSearch.Domain            # Entidades e contratos
 /OCRSearch.Infrastructure    # OCR, Elasticsearch, repositórios
 /OCRSearch.API               # Controllers e configuração
-compose.yml # Elasticsearch + Kibana
+compose.yml                  # API + Elasticsearch + Kibana
 ```
 
 ---
@@ -91,7 +91,7 @@ Content-Type: multipart/form-data
 
 - file
 
-**Value**
+**Value:**
 
 - Arquivo (PDF e imagem)
 
