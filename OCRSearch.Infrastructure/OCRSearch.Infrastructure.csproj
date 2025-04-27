@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\OCRSearch.Application\OCRSearch.Application.csproj" />
+      <ProjectReference Include="..\OCRSearch.Domain\OCRSearch.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>

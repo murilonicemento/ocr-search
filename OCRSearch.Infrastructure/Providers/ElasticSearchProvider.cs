@@ -3,7 +3,8 @@ using Microsoft.Extensions.Options;
 using OCRSearch.Application.DTOs;
 using OCRSearch.Application.Interfaces;
 using OCRSearch.Infrastructure.Configurations;
-using OCRSearch.Infrastructure.Models;
+using OCRSearch.Domain.Entities;
+using File = OCRSearch.Domain.Entities.File;
 
 namespace OCRSearch.Infrastructure.Providers;
 
@@ -28,7 +29,7 @@ public class ElasticSearchProvider : ISearchProvider
             await _client.Indices.CreateAsync(indexName);
         }
 
-        var file = new FileModel
+        var file = new File
         {
             Id = fileDto.Id,
             Name = fileDto.Name,
